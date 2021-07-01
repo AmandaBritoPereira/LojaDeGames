@@ -19,12 +19,10 @@ public class CategoriaModel {
 	@Size(min = 3)
 	private String nome;
 	
-	@NotEmpty
 	private float preco;
 	
 	private String descricao;
 	
-	@NotEmpty
 	private boolean disposicao;
 
 	public long getId() {
