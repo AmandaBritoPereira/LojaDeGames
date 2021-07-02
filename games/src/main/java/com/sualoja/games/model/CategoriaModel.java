@@ -13,7 +13,7 @@ public class CategoriaModel {
 	//Atributos e anotações
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private long idCategoria;
 	
 	@NotEmpty
 	@Size(min = 3)
@@ -26,12 +26,12 @@ public class CategoriaModel {
 	private boolean disposicao;
 
 	public long getId() {
-		return id;
+		return idCategoria;
 	}
 	
 	//Métodos getters e setters
 	public void setId(long id) {
-		this.id = id;
+		this.idCategoria = id;
 	}
 
 	public String getNome() {
