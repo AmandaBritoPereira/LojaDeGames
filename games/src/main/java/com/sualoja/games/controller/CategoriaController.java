@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,25 +43,38 @@ public class CategoriaController {
 	/**
 	 * Pesquisar todos os dados da CategoriaModel
 	 *  
-	 * NomeObjeto: Buscar Categoria
+	 * @NomeObjeto: BuscarCategoria
 	 * @GetMapping Método HTTP
 	 * @return para a aplicação: status e info no corpo da requisição
 	 */
-	@GetMapping("/buscarcategoria")
+	@GetMapping("/categoria")
 	public ResponseEntity<List<CategoriaModel>> BuscarCategoria() {
 		return ResponseEntity.status(200).body(repository.findAll());
 	}
 
 	/**
+	 * Pesquisar a categoria conforme o id especificado na url
+	 * 
+	 * @NomeObjeto BuscarIdCategoria
+	 * @param idCategoria
+	 * @return para a aplicação: status e info no corpo da requisição
+	 */	
+	@GetMapping("/categoria/{idCategoria}")
+	public ResponseEntity<CategoriaModel> BuscarIdCategoria(@PathVariable long idCategoria){
+		return repository.findById(idCategoria).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	}
+
+		
+	/**
 	 * Pesquisar os dados na aplicação conforme o atributo (param)
 	 * 
 	 * @GetMapping Método HTTP 
-	 * @NomeObjeto:BuscarNome
+	 * @NomeObjeto:BuscarDescricao
 	 * @param descricao
 	 * @return para a aplicação: status e inf no corpo da requisição
 	 */
-	@GetMapping("/buscarnome")
-	public ResponseEntity<List<CategoriaModel>> BuscarNome(@RequestParam String descricao) {
+	@GetMapping("/categoria/descricao")
+	public ResponseEntity<List<CategoriaModel>> BuscaDescricao (@RequestParam String descricao) {
 		return ResponseEntity.status(200).body(repository.findAllByDescricaoContaining(descricao));
 	}
 
