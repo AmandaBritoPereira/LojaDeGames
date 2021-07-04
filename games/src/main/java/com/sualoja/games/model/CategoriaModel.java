@@ -7,10 +7,16 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+/**
+ * Abstração e instanciação de objetos/recursos
+ * 
+ * Last Update: junho 2021
+ * @author Amanda Pereira
+ */
 @Entity
 public class CategoriaModel {
 	
-	//Atributos e anotações
+	//Atributos utilizados na Classe/Interface: CategoriaController e CategoriaRepository
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idCategoria;
@@ -18,8 +24,6 @@ public class CategoriaModel {
 	@NotEmpty
 	@Size(min = 3)
 	private String nome;
-	
-	private float preco;
 	
 	private String descricao;
 	
@@ -40,14 +44,6 @@ public class CategoriaModel {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public float getPreco() {
-		return preco;
-	}
-
-	public void setPreco(float preco) {
-		this.preco = preco;
 	}
 
 	public String getDescricao() {

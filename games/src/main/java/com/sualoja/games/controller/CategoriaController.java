@@ -20,29 +20,36 @@ import com.sualoja.games.model.CategoriaModel;
 import com.sualoja.games.repository.CategoriaRepository;
 //import com.sualoja.games.service.CategoriaService;
 
+/**
+ * Manipular requisições de fora da API (através do mét HTTP)
+ * 
+ * Last Update: junho 2021
+ * @author Amanda Pereira
+ */
 @RestController
 @RequestMapping("/loja")
 public class CategoriaController {
-	
+
 	/**
 	 * Fazer vínculo com a CategoriaRepository
+	 * 
 	 * @Autowired anotação para injeção de dependência
 	 * @param repository
 	 */
 	@Autowired
 	private CategoriaRepository repository;
-	
+
 	/**
-	 * Fazer vínculo com a CategoriaService
+	 * Fazer vínculo com a CategoriaService (em desuso).
+	 * 
 	 * @Autowired anotação para injeção de dependência
 	 * @param service
-	@Autowired
-	private CategoriaService service;
-	*/
-	
+	 * @Autowired private CategoriaService service;
+	 */
+
 	/**
-	 * Pesquisar todos os dados da CategoriaModel
-	 *  
+	 * Pesquisar todos os parametros da CategoriaModel
+	 * 
 	 * @NomeObjeto: BuscarCategoria
 	 * @GetMapping Método HTTP
 	 * @return para a aplicação: status e info no corpo da requisição
@@ -55,75 +62,72 @@ public class CategoriaController {
 	/**
 	 * Pesquisar a categoria conforme o id especificado na url
 	 * 
-	 * @NomeObjeto BuscarIdCategoria
-	 * @param idCategoria
+	 * @NomeMetodo BuscarIdCategoria
+	 * @param idCategoria, atributo da classe CategoriaModel
 	 * @return para a aplicação: status e info no corpo da requisição
-	 */	
+	 */
 	@GetMapping("/categoria/{idCategoria}")
-	public ResponseEntity<CategoriaModel> BuscarIdCategoria(@PathVariable long idCategoria){
-		return repository.findById(idCategoria).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<CategoriaModel> BuscarIdCategoria(@PathVariable long idCategoria) {
+		return repository.findById(idCategoria).map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.notFound().build());
 	}
 
-		
 	/**
-	 * Pesquisar os dados na aplicação conforme o atributo (param)
+	 * Pesquisar os parametros da model, conforme a busca específica no atributo descricao
 	 * 
-	 * @GetMapping Método HTTP 
-	 * @NomeObjeto:BuscarDescricao
-	 * @param descricao
+	 * @GetMapping Método HTTP
+	 * @NomeMetodo:BuscarDescricao
+	 * @param descricao, atributo da classe CategoriaModel
 	 * @return para a aplicação: status e inf no corpo da requisição
 	 */
 	@GetMapping("/categoria/descricao")
-	public ResponseEntity<List<CategoriaModel>> BuscaDescricao (@RequestParam String descricao) {
+	public ResponseEntity<List<CategoriaModel>> BuscaDescricao(@RequestParam String descricao) {
 		return ResponseEntity.status(200).body(repository.findAllByDescricaoContaining(descricao));
 	}
 
 	/**
-	 * Adicionar novos atributos à tabela CategoriaModel
+	 * Adicionar parametros aos atributos, da classe CategoriaModel
 	 * 
-	 * @PostMapping (Método HTTP), adicionar dados através do instanciamento de um objeto (param)
-	 * @NomeObjeto: AdicionarCategoria
-	 * @param NovaCategoria
-	 * @returnstatus utilizada em conjuto com uma aplicação
-	 * 		NovaCategoria retorna com infs no corpo da requisição
-	 * 		save: salva as infos retornadas no corpo da requisição
+	 * @PostMapping (Método HTTP), adicionar dados através do instanciamento de um
+	 *              objeto (param)
+	 * @NomeMetodo: AdicionarCategoria
+	 * @param NovaCategoria, Objeto instânciado para transportar informações
+	 * @return status 201 e infs requisitadas pelo @RequestBody
 	 */
 	@PostMapping("/adicionar")
 	public ResponseEntity<CategoriaModel> AdicionarCategoria(@Valid @RequestBody CategoriaModel NovaCategoria) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(NovaCategoria));
 	}
 
-	/* Anotação:
-	 * Versão Post simplificada: public List<CategoriaModel> BuscarAleatorio () {
-	 * return repository.findAll(); }
-	 */
-	
 	/**
 	 * Alteracao de dados da tabela CategoriaModel
-	 * @NomeObjeto put
-	 * @param alteracao
-	 * @return utilizada em conjuto com uma aplicação
-	 * 		alteracao: retorna com infs no corpo da requisição
-	 * 		save: salva as infos retornadas no corpo da requisição
+	 * 
+	 * @NomeMetodo put
+	 * @param alteracao, Objeto instânciado para transportar informações
+	 * @return utilizada em conjuto com uma aplicação alteracao: retorna com infs no
+	 *         corpo da requisição save: salva as infos retornadas no corpo da
+	 *         requisição
 	 */
-	@PutMapping ("/alterar")
-		public  ResponseEntity<CategoriaModel> put (@RequestBody CategoriaModel alteracao){
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(alteracao));
-		
+	@PutMapping("/alterar")
+	public ResponseEntity<CategoriaModel> put(@RequestBody CategoriaModel alteracao) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(alteracao));
+
 	}
 
 	/**
-	 * Ampliação para Service, em teste
-	 * Atualizar o atributo nome
+	 * Ampliação para Service, em teste Atualizar o atributo nome
+	 * 
 	 * @param idCategoria
 	 * @param NovaAlteracao
-	 * @return atualizar no repositorio,
-	 * 		map. mapear o retorno de status (200 ou 400)
-	
-	@PutMapping("/alterar/{id}")
-	public ResponseEntity<CategoriaModel> AlterarCategoria(@Valid @PathVariable (value = "id") long idCategoria,
-			@Valid @RequestBody CategoriaModel NovaAlteracao) {
-		return service.atualizarCategoria(idCategoria,NovaAlteracao).map(atu -> ResponseEntity.status(200).body(atu))
-				.orElse(ResponseEntity.badRequest().build());
-	}*/
+	 * @return atualizar no repositorio, map. mapear o retorno de status (200 ou
+	 *         400)
+	 * 
+	 *         @PutMapping("/alterar/{id}") public ResponseEntity<CategoriaModel>
+	 *         AlterarCategoria(@Valid @PathVariable (value = "id") long
+	 *         idCategoria,
+	 * @Valid @RequestBody CategoriaModel NovaAlteracao) { return
+	 *        service.atualizarCategoria(idCategoria,NovaAlteracao).map(atu ->
+	 *        ResponseEntity.status(200).body(atu))
+	 *        .orElse(ResponseEntity.badRequest().build()); }
+	 */
 }
