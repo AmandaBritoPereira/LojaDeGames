@@ -9,15 +9,18 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Atributos utilizados na Classe/Interface: CategoriaController e CategoriaRepository
+ * Atributos utilizados na Classe/Interface: CategoriaController e
+ * CategoriaRepository
  * 
  * Last Update: junho 2021
+ * 
  * @author Amanda Pereira
  */
 @Entity
 public class ProdutoModel {
-	
-	//Atributos utilizados na Classe/Interface: ProdutoController e ProdutoRepository
+
+	// Atributos utilizados na Classe/Interface: ProdutoController e
+	// ProdutoRepository
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idProduto;
@@ -33,7 +36,7 @@ public class ProdutoModel {
 
 	private boolean estoqueproduto;
 
-	//Métodos getters e setters
+	// Métodos getters e setters
 	public long getIdProduto() {
 		return idProduto;
 	}

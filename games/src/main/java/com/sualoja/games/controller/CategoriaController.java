@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import com.sualoja.games.repository.CategoriaRepository;
  * Manipular requisições de fora da API (através do mét HTTP)
  * 
  * Last Update: junho 2021
+ * 
  * @author Amanda Pereira
  */
 @RestController
@@ -73,7 +75,8 @@ public class CategoriaController {
 	}
 
 	/**
-	 * Pesquisar os parametros da model, conforme a busca específica no atributo descricao
+	 * Pesquisar os parametros da model, conforme a busca específica no atributo
+	 * descricao
 	 * 
 	 * @GetMapping Método HTTP
 	 * @NomeMetodo:BuscarDescricao
@@ -86,7 +89,7 @@ public class CategoriaController {
 	}
 
 	/**
-	 * Adicionar parametros aos atributos, da classe CategoriaModel
+	 * Adicionar parametros aos atributos da classe CategoriaModel
 	 * 
 	 * @PostMapping (Método HTTP), adicionar dados através do instanciamento de um
 	 *              objeto (param)
@@ -112,6 +115,17 @@ public class CategoriaController {
 	public ResponseEntity<CategoriaModel> put(@RequestBody CategoriaModel alteracao) {
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(alteracao));
 
+	}
+
+	/**
+	 * Deleta o conjunto de informações atreladas ao id (linha da tabela)
+	 * 
+	 * @NomeMétodo DeletarCategoria
+	 * @param idCategoria
+	 */
+	@DeleteMapping("/deletar/{idCategoria}")
+	public void DeletarCategoria(@PathVariable long idCategoria) {
+		repository.deleteById(idCategoria);
 	}
 
 	/**

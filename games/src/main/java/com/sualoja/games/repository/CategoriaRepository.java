@@ -10,14 +10,14 @@ import com.sualoja.games.model.CategoriaModel;
  * Estabelece a comunicação com o bando de dados (MySQL)
  * 
  * Last Update: junho 2021
+ * 
  * @author Amanda Pereira
  */
 @Repository
 public interface CategoriaRepository extends JpaRepository<CategoriaModel, Long> {
 
 	/**
-	 * Pesquisar nos parametros do atributo os caracteres informados na aplicacao 
-	 * Pesquisar na coluna descricao, os caracteres solicitados
+	 * Pesquisar nos parametros do atributo os caracteres informados na Aplicacao
 	 * 
 	 * @Método findByAllDescricaoContening localizar os dados solicitados na tabela
 	 * @param descricao

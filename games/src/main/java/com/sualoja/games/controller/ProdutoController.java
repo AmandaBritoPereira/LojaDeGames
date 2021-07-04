@@ -7,8 +7,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,20 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sualoja.games.model.ProdutoModel;
 import com.sualoja.games.repository.ProdutoRepository;
 
-
 /**
  * Estabelece a comunicação com o bando de dados (MySQL)
  * 
  * Last Update: julho 2021
+ * 
  * @author Amanda Pereira
  */
 @RestController
-@RequestMapping ("/produto")
+@RequestMapping("/produto")
 public class ProdutoController {
 
 	@Autowired
 	public ProdutoRepository repository;
-	
+
 	/**
 	 * Pesquisar todos os parametros da ProdutoModel
 	 * 
@@ -38,32 +41,59 @@ public class ProdutoController {
 	 * @GetMapping Método HTTP
 	 * @return para a Aplicação: status e info no corpo da requisição
 	 */
-	@GetMapping ("/produto")
-	public ResponseEntity<List<ProdutoModel>> BuscarProdutos(){
+	@GetMapping("/produto")
+	public ResponseEntity<List<ProdutoModel>> BuscarProdutos() {
 		return ResponseEntity.status(200).body(repository.findAll());
 	}
-	
+
 	/**
-	 * Pesquisar os parametros da model, conforme a busca específica no atributo descricao
+	 * Pesquisar os parametros da model, conforme a busca específica no atributo
+	 * descricao
 	 * 
 	 * @GetMapping Método HTTP
 	 * @NomeObjeto:BuscarDescricaoProduto
 	 * @param descricaoProduto
 	 * @return para a aplicação: status e inf no corpo da requisição
 	 */
-	@GetMapping ("/produto/descricao")
-	public ResponseEntity<List<ProdutoModel>> BuscarDescricaoProduto (@RequestParam String descricaoProduto){
+	@GetMapping("/produto/descricao")
+	public ResponseEntity<List<ProdutoModel>> BuscarDescricaoProduto(@RequestParam String descricaoProduto) {
 		return ResponseEntity.status(200).body(repository.findAllByDescricaoProdutoContaining(descricaoProduto));
 	}
+
 	/**
-	 * Adicionar parametros aos atributos, da classe ProdutoModel
+	 * Adicionar parametros aos atributos da classe ProdutoModel
 	 * 
 	 * @NomeMétodo AdicionarProduto
 	 * @param NovoProduto, Objeto instânciado para transportar informações
 	 * @return status 201 e infs requisitadas pelo @RequestBody
 	 */
-	@PostMapping ("/adicionar")
-	public ResponseEntity<ProdutoModel> AdicionarProduto (@Valid @RequestBody ProdutoModel NovoProduto){
+	@PostMapping("/adicionar")
+	public ResponseEntity<ProdutoModel> AdicionarProduto(@Valid @RequestBody ProdutoModel NovoProduto) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(NovoProduto));
 	}
+
+	/**
+	 * Altera os dados já adicionados. É feita a busca no repositorio quando
+	 * informado o idProduto.
+	 * 
+	 * @NomeMétodo AlterarProduto
+	 * @param AlterarProduto, Objeto instânciado para transportar informações
+	 * @return status 200 e alterações solicitadas pelo @RequestBody
+	 */
+	@PutMapping("/alterar")
+	public ResponseEntity<ProdutoModel> AlterarProduto(@Valid @RequestBody ProdutoModel AlterarProduto) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(AlterarProduto));
+	}
+
+	/**
+	 * Deleta o conjunto de informações atreladas ao id (linha da tabela)
+	 * 
+	 * @NomeMétodo DeletarProduto
+	 * @param idProduto
+	 */
+	@DeleteMapping("/deletar/{idProduto}")
+	public void DeletarProduto(@PathVariable long idProduto) {
+		repository.deleteById(idProduto);
+	}
+
 }
