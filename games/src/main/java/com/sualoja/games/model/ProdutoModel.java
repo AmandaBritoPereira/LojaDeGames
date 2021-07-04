@@ -1,12 +1,18 @@
 package com.sualoja.games.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Atributos utilizados na Classe/Interface: CategoriaController e
@@ -35,6 +41,16 @@ public class ProdutoModel {
 	private String descricaoProduto;
 
 	private boolean estoqueproduto;
+
+	/**
+	 * Estrutura dos dados, criação do relacionamento entre tabelas no MySQL
+	 * 
+	 * @OneToMany estrutura relacional
+	 * @JsonIgnoreProperties produto, evita recursividade na exibição dos dados
+	 */
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("produto")
+	public List<CategoriaModel> categoria;
 
 	// Métodos getters e setters
 	public long getIdProduto() {
