@@ -25,8 +25,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class ProdutoModel {
 
-	// Atributos utilizados na Classe/Interface: ProdutoController e
-	// ProdutoRepository
+	/**
+	 * Atributos utilizados na Classe/Interface: ProdutoController e
+	 * ProdutoRepository
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idProduto;
@@ -51,8 +53,18 @@ public class ProdutoModel {
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("produto")
 	public List<CategoriaModel> categoria;
+	
+	/**
+	 *  Métodos getters e setters 
+	 */
+	public List<CategoriaModel> getCategoria() {
+		return categoria;
+	}
 
-	// Métodos getters e setters
+	public void setCategoria(List<CategoriaModel> categoria) {
+		this.categoria = categoria;
+	}
+
 	public long getIdProduto() {
 		return idProduto;
 	}
@@ -77,12 +89,12 @@ public class ProdutoModel {
 		this.precoproduto = precoproduto;
 	}
 
-	public String getInformacoesproduto() {
+	public String getDescricaoProduto() {
 		return descricaoProduto;
 	}
 
-	public void setInformacoesproduto(String informacoesproduto) {
-		this.descricaoProduto = informacoesproduto;
+	public void setDescricaoProduto(String descricaoProduto) {
+		this.descricaoProduto = descricaoProduto;
 	}
 
 	public boolean isEstoqueproduto() {

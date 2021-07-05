@@ -7,6 +7,13 @@ import org.springframework.stereotype.Repository;
 
 import com.sualoja.games.model.ProdutoModel;
 
+/**
+ * Estabelecer comunicação com dados (MySQL)
+ * 
+ * Última atualização: julho de 2021
+ * 
+ * @author Amanda Pereira
+ */
 @Repository
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long> {
 

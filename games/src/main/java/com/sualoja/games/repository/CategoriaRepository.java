@@ -19,7 +19,7 @@ public interface CategoriaRepository extends JpaRepository<CategoriaModel, Long>
 	/**
 	 * Pesquisar nos parametros do atributo os caracteres informados na Aplicacao
 	 * 
-	 * @Método findByAllDescricaoContening localizar os dados solicitados na tabela
+	 * @Método findByAllDescricaoContaining localizar os dados solicitados na tabela
 	 * @param descricao
 	 * @return atributos da Model, onde os caracteres correspondem com os parametros
 	 *         do atributo descricao
